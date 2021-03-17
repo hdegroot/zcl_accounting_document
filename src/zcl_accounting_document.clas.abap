@@ -5,20 +5,20 @@ class zcl_accounting_document definition
   public section.
 
     types:
-      ty_return_tab     type standard table of bapiret2,
+      ty_return_tab     type standard table of bapiret2 ,
       ty_extension1_tab type standard table of bapiacextc,
       ty_extension2_tab type standard table of bapiparex.
 
     data:
-      obj_type        type bapiache09-obj_type,
-      obj_key         type bapiache09-obj_key,
-      obj_sys         type bapiache09-obj_sys,
+      obj_type          type bapiache09-obj_type read-only,
+      obj_key           type bapiache09-obj_key read-only,
+      obj_sys           type bapiache09-obj_sys read-only,
 
-      company_code    type bukrs,
-      document_number type belnr_d,
-      fiscal_year     type gjahr,
+      company_code      type bukrs read-only,
+      document_number   type belnr_d read-only,
+      fiscal_year       type gjahr read-only,
 
-      return_tab      type ty_return_tab.
+      return_tab        type ty_return_tab read-only.
 
     class-methods:
       create importing i_obj_type type awtyp default 'BKPFF'
@@ -45,7 +45,7 @@ class zcl_accounting_document definition
 
       set_extension2_tab importing i_extension2_tab type ty_extension2_tab,
 
-      check_before_post raising zcx_accounting_document_error,
+      simulate raising zcx_accounting_document_error,
 
       post raising zcx_accounting_document_error.
 
@@ -64,8 +64,6 @@ class zcl_accounting_document definition
       ty_accountpayable_tab    type standard table of bapiacap09,
       ty_currencyamount_tab    type standard table of bapiaccr09,
       ty_criteria_tab          type standard table of bapiackec9.
-
-
 
     data:
       document_creation_status       type char3,
@@ -290,7 +288,7 @@ class zcl_accounting_document implementation.
   endmethod.
 
 
-  method check_before_post.
+  method simulate.
 
     data:
       return_wa type bapiret2.

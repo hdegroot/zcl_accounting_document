@@ -9,6 +9,7 @@ try.
 
     acc_doc = zcl_accounting_document=>create( ).
 
+    "First specify the header fields
     acc_doc->set_field( i_name = 'BLDAT' i_value = '20200222' ).
     acc_doc->set_field( i_name = 'BLART' i_value = 'VD' ).
     acc_doc->set_field( i_name = 'BUKRS' i_value = '1000' ).
@@ -28,11 +29,16 @@ try.
     acc_doc->set_field( i_name = 'PRCTR' i_value = '0000100010' ).
     acc_doc->set_field( i_name = 'SGTXT' i_value = 'Bla, bla, bla' ).
 
+    "acc_doc->simulate( ).  "If you just want to simulate the posting.
+
     acc_doc->post( ).
 
     acc_doc->commit_transaction( ).
 
-    write: / 'Document posted successfully in company code', acc_doc->company_code, 'with document', acc_doc->document_number.
+    write: / 'Document posted successfully in company code',
+             acc_doc->company_code,
+             'with document',
+             acc_doc->document_number.
 
 
   catch zcx_accounting_document_error into acc_doc_error.
